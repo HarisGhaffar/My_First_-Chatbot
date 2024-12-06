@@ -64,4 +64,18 @@ st.markdown("<div class='header'><h1>🤖 AI Chatbot</h1></div>", unsafe_allow_h
 st.write("Welcome! Ask me anything about Artificial Intelligence. Let's learn together! 🚀")
 
 # Chatbot Input
-user_input = st.text_input("Type your question below:", placeholder="E.g., What is machine
+user_input = st.text_input("Type your question below:", placeholder="E.g., What is machine learning?")
+if st.button("Ask"):
+    if user_input.strip():
+        with st.spinner("Thinking..."):
+            answer = get_response(user_input)
+        st.markdown(
+            f"<div class='response-box'><b>Answer:</b> {answer}</div>",
+            unsafe_allow_html=True,
+        )
+    else:
+        st.warning("Please enter a question!")
+
+# Footer
+st.markdown("---")
+st.markdown("<p style='text-align: center;'>Built with ❤️ using Streamlit and Hugging Face Transformers</p>", unsafe_allow_html=True)
