@@ -2,7 +2,7 @@ import streamlit as st
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 # Load FLAN-T5 model and tokenizer
-@st.cache_resource  # Cache the model for faster loading
+@st.cache_resource
 def load_model():
     model_name = "google/flan-t5-large"
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -19,14 +19,49 @@ def get_response(question):
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return response
 
-# Streamlit UI
-st.title("AI Chatbot")
-st.write("Ask me anything about Artificial Intelligence!")
+# Streamlit Layout
+st.set_page_config(page_title="AI Chatbot", page_icon="🤖", layout="centered")
 
-# User input
-user_input = st.text_input("Type your question here:")
-if st.button("Ask") and user_input:
-    with st.spinner("Thinking..."):
-        answer = get_response(user_input)
-    st.success("Here is the answer:")
-    st.write(answer)
+# Custom CSS for styling
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #f7f7f7;
+        font-family: 'Arial', sans-serif;
+    }
+    .header {
+        text-align: center;
+        margin-top: -50px;
+        margin-bottom: 20px;
+    }
+    .header h1 {
+        font-size: 3rem;
+        color: #4CAF50;
+    }
+    .chat-input {
+        background-color: #FFFFFF;
+        border: 1px solid #cccccc;
+        border-radius: 10px;
+        padding: 10px;
+        width: 100%;
+    }
+    .response-box {
+        background-color: #e9f7ef;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 5px solid #4CAF50;
+        margin-top: 10px;
+        font-size: 1rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Chatbot Header
+st.markdown("<div class='header'><h1>🤖 AI Chatbot</h1></div>", unsafe_allow_html=True)
+st.write("Welcome! Ask me anything about Artificial Intelligence. Let's learn together! 🚀")
+
+# Chatbot Input
+user_input = st.text_input("Type your question below:", placeholder="E.g., What is machine
